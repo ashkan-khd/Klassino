@@ -1,0 +1,48 @@
+Django==3.1
+djangorestframework==3.11.1
+django-simple-history==2.8.0
+
+# testing
+model-mommy==2.0.0
+coverage==5.1
+freezegun==0.3.15
+requests==2.25.0
+
+# redis
+django-redis==4.11.0
+
+# postgresql
+psycopg2-binary==2.8.4
+
+# admin
+django-nested-admin==3.2.4
+
+
+# phone normalizer
+Unidecode==1.1.1
+phonenumbers==8.12.2
+
+# cors middleware
+django-cors-headers==3.2.1
+
+# server
+gunicorn==20.0.4
+
+# cronjobs
+django-crontab==0.7.1
+
+# jalali date
+django-jalali-date==0.3.1
+
+# ipython
+ipython==7.14.0
+
+# monitoring
+statsd==3.3.0
+
+# sentry
+sentry-sdk==0.14.4
+
+# filter
+django-filter==2.4.0
+skyroom==1.0.2

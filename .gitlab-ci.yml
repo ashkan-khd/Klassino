@@ -1,0 +1,39 @@
+stages:
+  - build
+  - test
+  - staging
+  - deploy
+
+build:
+  stage: build
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA .
+
+test:
+  stage: test
+  script:
+    - docker run -e MODE='testing' $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA python manage.py test
+
+staging:
+  stage: staging
+  before_script:
+    - apk update && apk add gettext
+  script:
+    - rm -f docker-compose.yml
+    - envsubst < deployment/docker-compose.staging.template.yml > docker-compose.yml
+    - docker stack deploy --compose-file docker-compose.yml karino_api_staging
+  only:
+    - master
+  when: manual
+
+deploy:
+  stage: deploy
+  before_script:
+    - apk update && apk add gettext
+  script:
+    - rm -f docker-compose.yml
+    - envsubst < deployment/docker-compose.template.yml > docker-compose.yml
+    - docker stack deploy --compose-file docker-compose.yml karino_api
+  only:
+    - master
+  when: manual

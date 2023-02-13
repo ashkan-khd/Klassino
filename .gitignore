@@ -1,0 +1,16 @@
+# python
+__pycache__
+
+# database
+db.sqlite3
+
+# ides / editors
+.idea
+.vscode
+
+# media
+media
+
+# test coverage
+.coverage
+karino/static/
