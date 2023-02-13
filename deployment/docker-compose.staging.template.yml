@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  karino_api_nginx:
+    image: nginx:stable
+    volumes:
+      - karino-media:/usr/share/nginx/html/media
+    networks:
+      karino-net:
+        aliases:
+          - karino_api_nginx_staging
+    depends_on:
+      - karino_api
+
+  karino_api:
+    image: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+    environment:
+      - MODE=staging
+    command: gunicorn -b 0.0.0.0:8000 karino.wsgi
+    volumes:
+      - karino-media-staging:/app/media
+    networks:
+      karino-net:
+        aliases:
+          - karino_api_staging
+
+volumes:
+  karino-media-staging:
+    external: true
+
+networks:
+  karino-net:
+    external: true

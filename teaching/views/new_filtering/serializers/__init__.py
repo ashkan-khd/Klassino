@@ -1,0 +1,1 @@
+from .course_card_serializer import CourseCardSerializer

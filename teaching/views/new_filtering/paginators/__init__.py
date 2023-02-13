@@ -1,0 +1,1 @@
+from .courses_page_paginator import CoursesPagePaginator
