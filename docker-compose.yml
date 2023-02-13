@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  karino_api:
+    build: .
+    environment:
+      - MODE=development
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+      - postgres
+      - rabbitmq
+
+  postgres:
+    container_name: karinogres
+    restart: always
+    image: postgres:9.5
+    ports:
+      - "5435:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+
+  redis:
+    image: "redis:alpine"
+    container_name: karinoredis
+    ports:
+      - "6380:6379"
+
+  rabbitmq:
+    image: rabbitmq:3.7-management
+    container_name: karinomq
+    ports:
+      - "15673:15672"
+      - "5673:5672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabbitmq
+      - RABBITMQ_DEFAULT_PASS=rabbitmq
